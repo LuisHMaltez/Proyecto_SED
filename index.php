@@ -17,8 +17,8 @@
             <h2 class="welcome">Bienvenido a Supermercado Seguro</h2>
             <p class="welcome">Por favor, elija una opción para continuar.</p>
             <div class="buttons">
-                <a href="register.html" class="button">Registro</a>
-                <a href="login.html" class="button">Inicio de Sesión</a>
+                <a href="register.php" class="button">Registro</a>
+                <a href="login.php" class="button">Inicio de Sesión</a>
             </div>
         </section>
     </main>

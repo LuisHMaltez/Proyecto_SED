@@ -15,7 +15,7 @@
     <main>
         <section id="edit-profile">
             <h2 class="page-title">Editar tu Información</h2>
-            <form>
+            <form method="POST" action="procesar_perfil.php" enctype="multipart/form-data">
                 <label for="full-name">Nombre Completo:</label>
                 <input type="text" id="full-name" name="full-name" required>
 
@@ -35,7 +35,7 @@
                 <input type="file" id="profile-pic" name="profile-pic">
 
                 <button type="submit">Guardar</button>
-                <button type="button" onclick="window.location.href='profile.html'">Cancelar</button>
+                <button type="button" onclick="window.location.href='profile.php'">Cancelar</button>
                 <button type="button" class="delete-btn" onclick="confirmDelete()">Borrar Perfil</button>
             </form>
         </section>

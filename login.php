@@ -15,7 +15,7 @@
     <main>
         <section id="login">
             <h2 class="page-title">Iniciar Sesión</h2>
-            <form action="products.html" method="POST">
+            <form action="products.php" method="POST">
                 <label for="username-login">Nombre de Usuario:</label>
                 <input type="text" id="username-login" name="username-login" required>
 
@@ -24,7 +24,7 @@
 
                 <button type="submit">Iniciar Sesión</button>
             </form>
-            <p>¿No tienes una cuenta? <a class="change-option" href="register.html">Regístrate</a></p>
+            <p>¿No tienes una cuenta? <a class="change-option" href="register.php">Regístrate</a></p>
         </section>
     </main>
 

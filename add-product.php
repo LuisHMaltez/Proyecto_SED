@@ -15,7 +15,7 @@
     <main>
         <section id="add-product">
             <h2 class="page-title">Agregar Nuevo Producto</h2>
-            <form>
+            <form method="POST" action="edit-catalog.php" enctype="multipart/form-data">
                 <label for="product-name">Nombre del Producto:</label>
                 <input type="text" id="product-name" name="product-name" required>
 
@@ -32,7 +32,7 @@
                 <input type="file" id="product-pic" name="product-pic">
 
                 <button type="submit">Agregar</button>
-                <button type="button" onclick="window.location.href='edit-catalog.html'">Cancelar</button>
+                <button type="button" onclick="window.location.href='edit-catalog.php'">Cancelar</button>
             </form>
         </section>
     </main>

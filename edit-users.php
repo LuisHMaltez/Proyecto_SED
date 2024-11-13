@@ -13,11 +13,11 @@
         <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
         <nav>
             <ul class="menu">
-                <li><a href="products.html">Productos</a></li>
-                <li><a href="profile.html">Perfil</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="index.html">Cerrar Sesión</a></li>
-                <li><a href="edit-catalog.html">Editar Catálogo</a></li>
+                <li><a href="products.php">Productos</a></li>
+                <li><a href="profile.php">Perfil</a></li>
+                <li><a href="cart.php">Carrito</a></li>
+                <li><a href="index.php">Cerrar Sesión</a></li>
+                <li><a href="edit-catalog.php">Editar Catálogo</a></li>
             </ul>
         </nav>
     </header>
@@ -33,7 +33,7 @@
                 <p>Correo Electrónico: Us1@example.com</p>
                 <p>Teléfono: 1234567890</p>
                 <p>Rol: Administrador</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 2">
@@ -42,7 +42,7 @@
                 <p>Correo Electrónico: Us2@example.com</p>
                 <p>Teléfono: 0123456789</p>
                 <p>Rol: Super Administrador</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 3">
@@ -51,7 +51,7 @@
                 <p>Correo Electrónico: Us3@example.com</p>
                 <p>Teléfono: 9012345678</p>
                 <p>Rol: Usuario</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 4">
@@ -60,7 +60,7 @@
                 <p>Correo Electrónico: Us4@example.com</p>
                 <p>Teléfono: 8901234567</p>
                 <p>Rol: Super Administrador</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 5">
@@ -69,7 +69,7 @@
                 <p>Correo Electrónico: Us5@example.com</p>
                 <p>Teléfono: 7890123456</p>
                 <p>Rol: Administrador</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 6">
@@ -78,7 +78,7 @@
                 <p>Correo Electrónico: Us6@example.com</p>
                 <p>Teléfono: 6789012345</p>
                 <p>Rol: Usuario</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
             <div class="user">
                 <img src="assets/img/profile.png" alt="Usuario 7">
@@ -87,9 +87,9 @@
                 <p>Correo Electrónico: Us7@example.com</p>
                 <p>Teléfono: 5678901234</p>
                 <p>Rol: Administrador</p>
-                <button onclick="window.location.href='edit-user.html'">Editar</button>
+                <button onclick="window.location.href='edit-user.php'">Editar</button>
             </div>
-        </div><!-- Más usuarios aquí -->
+        </div>
         </section>
     </main>
 

@@ -15,7 +15,7 @@
     <main>
         <section id="edit-user">
             <h2 class="page-title">Editar Información del Usuario</h2>
-            <form>
+            <form method="POST" action="edit-users.php" enctype="multipart/form-data">
                 <label for="full-name">Nombre Completo:</label>
                 <input type="text" id="full-name" name="full-name" required>
 
@@ -26,7 +26,7 @@
                 <input type="email" id="email" name="email" required>
 
                 <label for="phone">Teléfono:</label>
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{8}" required>
 
                 <label for="birthdate">Fecha de Nacimiento:</label>
                 <input type="date" id="birthdate" name="birthdate" required>
@@ -42,7 +42,7 @@
                 <input type="file" id="profile-pic" name="profile-pic">
 
                 <button type="submit">Guardar</button>
-                <button type="button" onclick="window.location.href='edit-users.html'">Cancelar</button>
+                <button type="button" onclick="window.location.href='edit-users.php'">Cancelar</button>
                 <button type="button" class="delete-btn" onclick="confirmDelete()">Borrar Usuario</button>
             </form>
         </section>

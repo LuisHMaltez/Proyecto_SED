@@ -13,11 +13,11 @@
         <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
         <nav>
             <ul class="menu">
-                <li><a href="products.html">Productos</a></li>
-                <li><a href="profile.html">Perfil</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="index.html">Cerrar Sesión</a></li>
-                <li><a href="edit-users.html">Editar Usuarios</a></li>
+                <li><a href="products.php">Productos</a></li>
+                <li><a href="profile.php">Perfil</a></li>
+                <li><a href="cart.php">Carrito</a></li>
+                <li><a href="index.php">Cerrar Sesión</a></li>
+                <li><a href="edit-users.php">Editar Usuarios</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +32,7 @@
                 <p>Descripción del producto 1.</p>
                 <p>Precio: $10.00</p>
                 <p>Stock: 20</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 2">
@@ -40,7 +40,7 @@
                 <p>Descripción del producto 2.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 3">
@@ -48,7 +48,7 @@
                 <p>Descripción del producto 3.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 4">
@@ -56,7 +56,7 @@
                 <p>Descripción del producto 4.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 5">
@@ -64,7 +64,7 @@
                 <p>Descripción del producto 5.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 6">
@@ -72,7 +72,7 @@
                 <p>Descripción del producto 6.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
             <div class="product">
                 <img src="assets/img/Products.png" alt="Producto 7">
@@ -80,11 +80,10 @@
                 <p>Descripción del producto 7.</p>
                 <p>Precio: $20.00</p>
                 <p>Stock: 15</p>
-                <button onclick="window.location.href='edit-product.html'">Editar</button>
+                <button onclick="window.location.href='edit-product.php'">Editar</button>
             </div>
         
-            <!-- Más productos aquí -->
-            <button id="add-product-btn" onclick="window.location.href='add-product.html'">Agregar Producto</button>
+            <button id="add-product-btn" onclick="window.location.href='add-product.php'">Agregar Producto</button>
         </div>
         </section>
     </main>

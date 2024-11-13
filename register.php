@@ -15,7 +15,7 @@
     <main>
         <section id="register">
             <h2 class="page-title">Crear una nueva cuenta</h2>
-            <form action="login.html" method="POST">
+            <form action="login.php" method="POST">
                 <label for="full-name">Nombre Completo:</label>
                 <input type="text" id="full-name" name="full-name" required>
 
@@ -36,7 +36,7 @@
 
                 <button type="submit">Registrar</button>
             </form>
-            <p>¿Ya tienes una cuenta? <a class="change-option" href="login.html">Iniciar sesión</a></p>
+            <p>¿Ya tienes una cuenta? <a class="change-option" href="login.php">Iniciar sesión</a></p>
         </section>
     </main>
 </body>

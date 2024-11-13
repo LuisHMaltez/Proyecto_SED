@@ -14,11 +14,11 @@
         <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
         <nav>
             <ul class="menu">
-                <li><a href="profile.html">Perfil</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="index.html">Cerrar Sesión</a></li>
-                <li><a href="edit-catalog.html">Editar Catálogo</a></li>
-                <li><a href="edit-users.html">Editar Usuarios</a></li>
+                <li><a href="profile.php">Perfil</a></li>
+                <li><a href="cart.php">Carrito</a></li>
+                <li><a href="index.php">Cerrar Sesión</a></li>
+                <li><a href="edit-catalog.php">Editar Catálogo</a></li>
+                <li><a href="edit-users.php">Editar Usuarios</a></li>
             </ul>
         </nav>
     </header>

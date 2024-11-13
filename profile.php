@@ -13,11 +13,11 @@
         <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
         <nav>
             <ul class="menu">
-                <li><a href="products.html">Productos</a></li>
-                <li><a href="cart.html">Carrito</a></li>
-                <li><a href="index.html">Cerrar Sesión</a></li>
-                <li><a href="edit-catalog.html">Editar Catálogo</a></li>
-                <li><a href="edit-users.html">Editar Usuarios</a></li>
+                <li><a href="products.php">Productos</a></li>
+                <li><a href="cart.php">Carrito</a></li>
+                <li><a href="index.php">Cerrar Sesión</a></li>
+                <li><a href="edit-catalog.php">Editar Catálogo</a></li>
+                <li><a href="edit-users.php">Editar Usuarios</a></li>
             </ul>
         </nav>
     </header>
@@ -31,7 +31,7 @@
             <p>Correo Electrónico: jperez@example.com</p>
             <p>Teléfono: 1234567890</p>
             <p>Fecha de Nacimiento: 01/01/2000</p>
-            <button onclick="window.location.href='edit-profile.html'">Editar Perfil</button>
+            <button onclick="window.location.href='edit-profile.php'">Editar Perfil</button>
         </section>
     </main>
     
