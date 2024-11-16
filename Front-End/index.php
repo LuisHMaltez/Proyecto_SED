@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Supermercado Seguro</h1>
-        <img class="header-img" src="assets/img/shopping-cart.png" alt="home">
+        <img class="header-img-index" src="assets/img/shopping-cart.png" alt="home">
     </header>
 
     <main>

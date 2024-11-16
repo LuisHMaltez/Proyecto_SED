@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Editar Usuario</h1>
-        <img class="header-img" src="assets/img/edit-user.png" alt="edit-user">
+        <img class="header-img-index" src="assets/img/edit-user.png" alt="edit-user">
     </header>
 
     <main>

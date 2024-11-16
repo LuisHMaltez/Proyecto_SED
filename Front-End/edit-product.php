@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Editar Producto</h1>
-        <img class="header-img" src="assets/img/edit-product.png" alt="edit-product">
+        <img class="header-img-index" src="assets/img/edit-product.png" alt="edit-product">
     </header>
 
     <main>

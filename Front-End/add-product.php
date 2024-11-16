@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Agregar Producto</h1>
-        <img class="header-img" src="assets/img/add-product.png" alt="add-product">
+        <img class="header-img-index" src="assets/img/add-product.png" alt="add-product">
     </header>
 
     <main>

@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Registro</h1>
-        <img class="header-img" src="assets/img/register.png" alt="register">
+        <img class="header-img-index" src="assets/img/register.png" alt="register">
     </header>
 
     <main>

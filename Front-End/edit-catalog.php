@@ -9,8 +9,10 @@
 <body>
     <header>
         <h1>Editar Catálogo</h1>
-        <img class="header-img" src="assets/img/edit-catalog.png" alt="edit-catalog">
-        <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
+        <div class="header-inner">
+            <img class="header-img" src="assets/img/edit-catalog.png" alt="product-list"> 
+            <button class="menu-button" onclick="toggleMenu()">Menú ☰</button>
+        </div>
         <nav>
             <ul class="menu">
                 <li><a href="products.php">Productos</a></li>

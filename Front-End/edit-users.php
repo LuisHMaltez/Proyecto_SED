@@ -9,8 +9,10 @@
 <body>
     <header>
         <h1>Editar Usuarios</h1>
-        <img class="header-img" src="assets/img/edit-users.png" alt="edit-users">
-        <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
+        <div class="header-inner">
+            <img class="header-img" src="assets/img/edit-users.png" alt="product-list"> 
+            <button class="menu-button" onclick="toggleMenu()">Menú ☰</button>
+        </div>
         <nav>
             <ul class="menu">
                 <li><a href="products.php">Productos</a></li>

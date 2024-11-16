@@ -10,8 +10,10 @@
 
     <header>
         <h1>Carrito</h1>
-        <img class="header-img" src="assets/img/cart.png" alt="cart">
-        <button class="menu-button" onclick="toggleMenu()">☰ Menú</button>
+        <div class="header-inner">
+            <img class="header-img" src="assets/img/cart.png" alt="product-list"> 
+            <button class="menu-button" onclick="toggleMenu()">Menú ☰</button>
+        </div>
         <nav>
             <ul class="menu">
                 <li><a href="profile.php">Perfil</a></li>

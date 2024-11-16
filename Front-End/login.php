@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Inicio de Sesión</h1>
-        <img class="header-img" src="assets/img/login.png" alt="login">
+        <img class="header-img-index" src="assets/img/login.png" alt="login">
     </header>
 
     <main>

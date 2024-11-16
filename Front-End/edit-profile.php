@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Editar Perfil</h1>
-        <img class="header-img" src="assets/img/edit-profile.png" alt="edit-profile">
+        <img class="header-img-index" src="assets/img/edit-profile.png" alt="edit-profile">
     </header>
 
     <main>
