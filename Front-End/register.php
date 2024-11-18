@@ -26,7 +26,7 @@
                 <input type="email" id="email" name="email" required>
 
                 <label for="phone">Teléfono:</label>
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{8}" required>
 
                 <label for="birthdate">Fecha de Nacimiento:</label>
                 <input type="date" id="birthdate" name="birthdate" required>

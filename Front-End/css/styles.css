@@ -346,3 +346,25 @@ button:hover {
     border-radius: 5px;
 
 }
+
+.supplier {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    flex-direction: column;
+    border: double;
+    width: 32.8%;
+}
+
+.supplier-inner-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+#add-supplier-btn{
+    margin-top: 5%;
+}

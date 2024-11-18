@@ -19,6 +19,7 @@
                 <li><a href="profile.php">Perfil</a></li>
                 <li><a href="products.php">Productos</a></li>
                 <li><a href="index.php">Cerrar Sesión</a></li>
+                <li><a href="suppliers.php">Proveedores</a></li>
                 <li><a href="edit-catalog.php">Editar Catálogo</a></li>
                 <li><a href="edit-users.php">Editar Usuarios</a></li>
             </ul>
