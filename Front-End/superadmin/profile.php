@@ -32,7 +32,7 @@
             <p>Email: <span id="email"></span></p> 
             <p>Teléfono: <span id="phone"></span></p> 
             <p>Fecha de Nacimiento: <span id="birthdate"></span></p> 
-            <p>Rol: <span id="role">superadmin</span></p> 
+            <p>Rol: <span id="role"></span></p> 
             <button onclick="location.href='edit-profile.php'">Editar Perfil</button> 
         </section>
     </main>

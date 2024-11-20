@@ -11,16 +11,24 @@ const sendResponse = (res, statusCode, data) => {
     res.end(JSON.stringify(data));
 };
 
-// Función para registrar un usuario
-const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password, rol_id, callback) => {
+// Registro de nuevo usuario
+const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password, callback) => {
     try {
-        if (!nombre_usuario || !nombre || !email || !telefono || !fecha_nacimiento || !password || !rol_id) {
+        if (!nombre_usuario || !nombre || !email || !telefono || !fecha_nacimiento || !password) {
             callback({ error: 'Faltan datos para el registro', statusCode: 400 });
             return;
         }
         
         const hashedPassword = await bcrypt.hash(password, 12);
-        const user = { nombre_usuario, nombre, email, telefono, fecha_nacimiento, password: hashedPassword, rol_id };
+        const user = { 
+            nombre_usuario, 
+            nombre, 
+            email, 
+            telefono, 
+            fecha_nacimiento, 
+            password: hashedPassword, 
+            rol_id: 'user' // Asignar rol por defecto 'user'
+        };
 
         const result = await getDB().collection('users').insertOne(user);
         callback(null, { id: result.insertedId });

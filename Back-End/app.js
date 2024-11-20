@@ -105,7 +105,7 @@ const server = http.createServer(async (req, res) => {
         // Rutas de autenticación
         if (path === '/auth/register' && method === 'POST') {
             try {
-                validateRequiredFields(body, ['nombre_usuario', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'password', 'rol_id']);
+                validateRequiredFields(body, ['nombre_usuario', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'password']);
                 const result = await new Promise((resolve, reject) => {
                     registerUser(body.nombre_usuario, body.nombre, body.email, body.telefono, body.fecha_nacimiento, body.password, body.rol_id, (error, result) => {
                         if (error) reject(error);
