@@ -368,3 +368,15 @@ button:hover {
 #add-supplier-btn{
     margin-top: 5%;
 }
+
+
+.logout:hover{
+    .delete-btn-img{
+        background-color:brown;
+    }
+}
+
+.logout{
+    background-color: crimson;
+    width: 50px;
+}

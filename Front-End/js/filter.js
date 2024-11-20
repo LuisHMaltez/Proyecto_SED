@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     if (!token) {
-        window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
+        window.location.href = '../login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
     // Cargar proveedores

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito - Supermercado Seguro</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
     <header>
         <h1>Carrito</h1>
         <div class="header-inner">
-            <img class="header-img" src="assets/img/cart.png" alt="product-list"> 
+            <img class="header-img" src="../assets/img/cart.png" alt="product-list"> 
             <button class="menu-button" onclick="toggleMenu()">Menú ☰</button>
         </div>
         <nav>

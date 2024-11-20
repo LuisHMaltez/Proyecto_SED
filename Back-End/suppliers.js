@@ -28,6 +28,17 @@ const getAllSuppliers = (callback) => {
         .catch(err => callback(err));
 };
 
+
+const getSupplierById = (id, callback) => {
+    const db = getDB();
+    db.collection('suppliers').findOne({ _id: new ObjectId(id) }, (err, supplier) => {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, supplier);
+    });
+};
+
 // Actualizar un proveedor
 const updateSupplier = (id, name, contact_info, direccion, registro, encargado, telefono, callback) => {
     const db = getDB();
@@ -62,7 +73,8 @@ const deleteSupplier = (id, callback) => {
 // Exportar todas las funciones
 module.exports = {
     createSupplier,
-    getAllSuppliers, // Asegúrate de que esta función esté incluida aquí
+    getAllSuppliers,
+    getSupplierById, 
     updateSupplier,
     deleteSupplier
 };

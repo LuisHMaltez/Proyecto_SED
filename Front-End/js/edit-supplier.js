@@ -11,15 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(supplier => {
-            document.getElementById('supplierId').value = supplier._id;
-            document.getElementById('name').value = supplier.name;
-            document.getElementById('contact_info').value = supplier.contact_info;
-            document.getElementById('direccion').value = supplier.direccion;
-            document.getElementById('registro').value = supplier.registro;
-            document.getElementById('encargado').value = supplier.encargado;
-            document.getElementById('phone').value = supplier.phone;
+            if (supplier) {
+                document.getElementById('supplierId').value = supplier._id;
+                document.getElementById('name').value = supplier.name;
+                document.getElementById('contact_info').value = supplier.contact_info;
+                document.getElementById('direccion').value = supplier.direccion;
+                document.getElementById('registro').value = supplier.registro;
+                document.getElementById('encargado').value = supplier.encargado;
+                document.getElementById('phone').value = supplier.telefono;
+            } else {
+                console.error('Proveedor no encontrado');
+                alert('Proveedor no encontrado');
+            }
         })
         .catch(error => console.error('Error al cargar el proveedor:', error));
     }
@@ -39,7 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(result => {
             console.log('Proveedor actualizado:', result);
             window.location.href = 'suppliers.php'; // Redirige de vuelta a la lista de proveedores

@@ -20,11 +20,12 @@
                 <input type="email" name="email" placeholder="Correo electrónico" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar Sesión</button>
+                <button type="button" onclick="window.location.href='index.php'">Cancelar</button>
             </form>
             <p>¿No tienes una cuenta? <a class="change-option" href="register.php">Regístrate</a></p>
         </section>
     </main>
-
-    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+    
 </body>
 </html>

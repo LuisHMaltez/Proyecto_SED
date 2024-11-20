@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <header>
@@ -28,7 +28,7 @@
             </form>
         </section>
     </main>
-    <script src="js/auth.js"></script>
-    <script src="js/edit-profile.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/edit-profile.js"></script>
 </body>
 </html>

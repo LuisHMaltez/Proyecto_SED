@@ -1,28 +1,35 @@
-// auth.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { getDB } = require('./db');
 const { ObjectId } = require('mongodb');
 
-const jwtSecret = process.env.JWT_SECRET || 'default_secret'; // Cambia 'default_secret' por una clave segura y almacénala en .env
+const jwtSecret = process.env.JWT_SECRET || 'default_secret';
+
+// Función para enviar respuestas HTTP consistentes
+const sendResponse = (res, statusCode, data) => {
+    res.writeHead(statusCode, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(data));
+};
 
 // Función para registrar un usuario
-const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password,  rol_id, callback) => {
+const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password, rol_id, callback) => {
     try {
-        if (!nombre_usuario ||!nombre|| !email ||!telefono||!fecha_nacimiento|| !password || !rol_id) {
-            throw new Error('Faltan datos para el registro');
+        if (!nombre_usuario || !nombre || !email || !telefono || !fecha_nacimiento || !password || !rol_id) {
+            callback({ error: 'Faltan datos para el registro', statusCode: 400 });
+            return;
         }
         
-        const hashedPassword = await bcrypt.hash(password, 12); // Incrementar el salt rounds a 12 para más seguridad
+        const hashedPassword = await bcrypt.hash(password, 12);
         const user = { nombre_usuario, nombre, email, telefono, fecha_nacimiento, password: hashedPassword, rol_id };
 
         const result = await getDB().collection('users').insertOne(user);
         callback(null, { id: result.insertedId });
     } catch (err) {
-        callback({ error: err.message });   
+        callback({ error: err.message, statusCode: 500 });
     }
 };
-const updateUser = async (id,nombre_usuario, nombre, email, telefono, fecha_nacimiento, rol_id, password, callback) => {
+
+const updateUser = async (id, nombre_usuario, nombre, email, telefono, fecha_nacimiento, rol_id, callback) => {
     try {
         const db = getDB();
         const query = {
@@ -32,78 +39,114 @@ const updateUser = async (id,nombre_usuario, nombre, email, telefono, fecha_naci
                 email,
                 telefono,
                 fecha_nacimiento,
-                rol_id,
-                password
+                rol_id
             }
         };
-        const hashedPassword = await bcrypt.hash(password, 12); // Incrementar el salt rounds a 12 para más seguridad
-        const user = { nombre_usuario, nombre, email, telefono, fecha_nacimiento, password: hashedPassword, rol_id };
-
 
         const result = await db.collection('users').updateOne(
             { _id: new ObjectId(id) },
             query
         );
+        
+        if (result.matchedCount === 0) {
+            callback({ error: 'Usuario no encontrado', statusCode: 404 });
+            return;
+        }
+        
         callback(null, result);
     } catch (err) {
-        callback(err);
+        callback({ error: err.message, statusCode: 500 });
     }
 };
 
-const deleteUser = (id, callback) => {
+const deleteUser = async (id, callback) => {
     try {
         const db = getDB();
-        db.collection('users').deleteOne({ _id: new ObjectId(id) })
-            .then(result => callback(null, result))
-            .catch(err => callback(err));
-    } catch (error) {
-        callback(error);
+        const result = await db.collection('users').deleteOne({ _id: new ObjectId(id) });
+        
+        if (result.deletedCount === 0) {
+            callback({ error: 'Usuario no encontrado', statusCode: 404 });
+            return;
+        }
+        
+        callback(null, result);
+    } catch (err) {
+        callback({ error: err.message, statusCode: 500 });
     }
 };
-const getAllUsers = (callback) => {
-    const db = getDB();
-    db.collection('users').find({}).toArray()
-        .then(users => callback(null, users))
-        .catch(err => callback(err));
+
+const getAllUsers = async (callback) => {
+    try {
+        const db = getDB();
+        const users = await db.collection('users').find({}).toArray();
+        callback(null, users);
+    } catch (err) {
+        callback({ error: err.message, statusCode: 500 });
+    }
 };
+
 // Función para iniciar sesión
 const loginUser = async (email, password, callback) => {
     try {
-        if (!email || !password) throw new Error('Faltan datos para el inicio de sesión');
+        if (!email || !password) {
+            callback({ error: 'Faltan datos para el inicio de sesión', statusCode: 400 });
+            return;
+        }
 
         const user = await getDB().collection('users').findOne({ email });
-        if (!user) return callback(null, null);
+        if (!user) {
+            callback({ error: 'Credenciales inválidas', statusCode: 401 });
+            return;
+        }
 
         const match = await bcrypt.compare(password, user.password);
-        if (!match) return callback(null, null);
+        if (!match) {
+            callback({ error: 'Credenciales inválidas', statusCode: 401 });
+            return;
+        }
 
         const token = jwt.sign({ userId: user._id, rol_id: user.rol_id }, jwtSecret, { expiresIn: '1h' });
         callback(null, { token });
     } catch (err) {
-        callback({ error: err.message });
+        callback({ error: err.message, statusCode: 500 });
     }
 };
 
 // Middleware para autenticar el token
-const authenticateToken = (req, res, next) => {
+const authenticateToken = (req, callback) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (!token) return res.status(401).json({ error: 'Token no proporcionado' });
+    if (!token) {
+        callback({ error: 'Token no proporcionado', statusCode: 401 });
+        return;
+    }
 
     jwt.verify(token, jwtSecret, (err, user) => {
-        if (err) return res.status(403).json({ error: 'Token inválido' });
-        req.user = user;
-        next();
+        if (err) {
+            callback({ error: 'Token inválido', statusCode: 403 });
+            return;
+        }
+        callback(null, user);
     });
 };
 
 // Middleware para autorizar roles
-const authorizeRole = (roles) => (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.rol_id)) {
-        return res.status(403).json({ error: 'No autorizado' });
+const authorizeRole = (roles, user, callback) => {
+    if (!user || !roles.includes(user.rol_id)) {
+        callback({ error: 'No autorizado', statusCode: 403 });
+        return;
     }
-    next();
+    callback(null);
 };
 
-module.exports = { registerUser, loginUser, authenticateToken, authorizeRole,updateUser,deleteUser,getAllUsers };
+module.exports = {
+    registerUser,
+    loginUser,
+    authenticateToken,
+    authorizeRole,
+    updateUser,
+    deleteUser,
+    getAllUsers,
+    sendResponse
+};
