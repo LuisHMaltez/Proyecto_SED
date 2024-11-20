@@ -55,7 +55,7 @@ const getAllProducts = (callback) => {
         .catch(err => callback(err));
 };
 
-const updateProduct = (id, name, description, price, stock, supplier_id, callback) => {
+const updateProduct = (id, name, description, price, stock, category_id, supplier_id, callback) => {
     const db = getDB();
     const query = {
         $set: {
@@ -64,6 +64,7 @@ const updateProduct = (id, name, description, price, stock, supplier_id, callbac
             price: Number(price),
             stock: Number(stock),
             supplier_id: new ObjectId(supplier_id),
+            category_id: new ObjectId(category_id),
             updatedAt: new Date()
         }
     };
@@ -113,26 +114,47 @@ const advancedSearch = (searchParams, callback) => {
             query.name = new RegExp(searchParams.name, 'i');
         }
 
-        if (searchParams.stock) {
-            const stockNum = Number(searchParams.stock);
-            if (!isNaN(stockNum)) {
-                query.stock = stockNum;
-            } else {
-                switch (searchParams.stock.toLowerCase()) {
-                    case 'low':
-                        query.stock = { $lt: 10 };
-                        break;
-                    case 'medium':
-                        query.stock = { $gte: 10, $lte: 50 };
-                        break;
-                    case 'high':
-                        query.stock = { $gt: 50 };
-                        break;
-                }
+        if (searchParams.minPrice || searchParams.maxPrice) {
+            query.price = {};
+            if (searchParams.minPrice) {
+                query.price.$gte = parseFloat(searchParams.minPrice);
+            }
+            if (searchParams.maxPrice) {
+                query.price.$lte = parseFloat(searchParams.maxPrice);
             }
         }
 
-        db.collection('products').find(query).toArray()
+        db.collection('products').aggregate([
+            { $match: query },
+            {
+                $lookup: {
+                    from: "suppliers",
+                    localField: "supplier_id",
+                    foreignField: "_id",
+                    as: "supplier_info"
+                }
+            },
+            {
+                $lookup: {
+                    from: "category",
+                    localField: "category_id",
+                    foreignField: "_id",
+                    as: "category_info"
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    price: 1,
+                    category_id: 1,
+                    category_name: { $arrayElemAt: ["$category_info.name", 0] },
+                    description: 1,
+                    stock: 1,
+                    supplier_id: 1,
+                    supplier_name: { $arrayElemAt: ["$supplier_info.name", 0] }
+                }
+            }
+        ]).toArray()
             .then(products => callback(null, products))
             .catch(err => callback(err));
 
@@ -140,6 +162,8 @@ const advancedSearch = (searchParams, callback) => {
         callback(error);
     }
 };
+
+
 
 module.exports = {
     createProduct,

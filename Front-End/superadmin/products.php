@@ -35,8 +35,6 @@
             <!-- Formulario de Filtro -->
             <div class="filter-form" id="filterForm" style="display: none;">
                 <input type="text" id="productName" placeholder="Nombre del Producto">
-                <input type="number" id="minPrice" placeholder="Precio Mínimo">
-                <input type="number" id="maxPrice" placeholder="Precio Máximo">
     
                 <select id="providerSelect">
                 <option value="">Selecciona un proveedor</option>
@@ -46,7 +44,8 @@
                 <option value="">Selecciona una categoría</option>
                 </select>
 
-                <button type="button" id="filterButton">Filtrar</button>
+                <button type="button" id="filterButton">Aplicar filtros</button>
+                <button class="delete-btn" type="button" id="clearFilterButton">Eliminar Filtros</button>
             </div>
 
             <div class="product-inner-list" id="productsContainer">

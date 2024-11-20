@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const cors = require('cors');
-const { registerUser, loginUser, authenticateToken, authorizeRole, getAllUsers, updateUser, deleteUser } = require('./auth');
+const { registerUser, loginUser, getProfile, authenticateToken, authorizeRole, getAllUsers, updateUser, deleteUser } = require('./auth');
 const { createSupplier, getAllSuppliers, updateSupplier, deleteSupplier } = require('./suppliers');
 const { createProduct, getAllProducts, updateProduct, deleteProduct, advancedSearch } = require('./products');
 const { connectDB } = require('./db');
@@ -199,7 +199,7 @@ const server = http.createServer(async (req, res) => {
                         return;
                     }
                 }
-
+                app.get('/auth/profile', getProfile);
 // ==================== RUTAS DE PROVEEDORES ====================
 if (path === '/suppliers' && method === 'GET') {
     try {
