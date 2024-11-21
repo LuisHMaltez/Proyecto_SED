@@ -465,11 +465,11 @@ if (productIdMatch) {
             const user = await authenticate(req);
             await authorize(['superadmin', 'admin'], user);
 
-            validateRequiredFields(body, ['name', 'description', 'price', 'stock', 'supplier_id']);
+            validateRequiredFields(body, ['name', 'description', "category_id", 'price', 'stock', 'supplier_id']);
 
             const result = await new Promise((resolve, reject) => {
                 updateProduct(
-                    productId, body.name, body.description, body.price, body.stock, body.supplier_id,
+                    productId, body.name, body.description, body.price, body.category_id, body.stock, body.supplier_id,
                     (error, result) => {
                         if (error) reject(error);
                         else resolve(result);

@@ -55,7 +55,7 @@ const getAllProducts = (callback) => {
         .catch(err => callback(err));
 };
 
-const updateProduct = (id, name, description, price, stock, supplier_id, callback) => {
+const updateProduct = (id, name, description, price, category_id, stock, supplier_id, callback) => {
     const db = getDB();
     const query = {
         $set: {
@@ -63,6 +63,7 @@ const updateProduct = (id, name, description, price, stock, supplier_id, callbac
             description,
             price: Number(price),
             stock: Number(stock),
+            category_id: new ObjectId(category_id),
             supplier_id: new ObjectId(supplier_id),
             updatedAt: new Date()
         }
