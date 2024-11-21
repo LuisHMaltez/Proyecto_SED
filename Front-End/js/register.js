@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         console.log("Primera fase")
-        fetch('http://localhost:3000/auth/register', {
+        fetch('http://192.168.232.128:3000/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
