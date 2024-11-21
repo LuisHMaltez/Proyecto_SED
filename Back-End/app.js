@@ -11,6 +11,7 @@ const { getAllCategories, createCategory, updateCategory, deleteCategory } = req
 const PORT = 3000;
 require('dotenv').config();
 
+app.use(cors());
 // Función helper para manejar respuestas
 const sendResponse = (res, statusCode, data) => {
     res.statusCode = statusCode;
