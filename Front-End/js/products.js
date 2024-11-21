@@ -2,7 +2,7 @@
 
 // Función para cargar productos con filtros
 function loadProducts(filters = {}) {
-    let url = 'http://localhost:3000/products/search';
+    let url = 'http://192.168.77.43:3000/products/search';
 
     if (Object.keys(filters).length > 0) {
         const params = new URLSearchParams();

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
-    fetch('http://localhost:3000/products', {
+    fetch('http://192.168.77.43:3000/products', {
         headers: {
             'Authorization': 'Bearer ' + token
         }
@@ -41,7 +41,7 @@ function deleteProduct(id) {
         window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
-    fetch(`http://localhost:3000/products/${id}`, {
+    fetch(`http://192.168.77.43:3000/products/${id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token

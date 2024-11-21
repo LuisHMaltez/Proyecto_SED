@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (supplierId) {
         console.log('Cargando datos para el proveedor:', supplierId);
-        fetch(`http://localhost:3000/suppliers/${supplierId}`, {
+        fetch(`http://192.168.77.43:3000/suppliers/${supplierId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('token');
         console.log('Enviando datos para actualizar el proveedor:', data);
 
-        fetch(`http://localhost:3000/suppliers/${supplierId}`, {
+        fetch(`http://192.168.77.43:3000/suppliers/${supplierId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

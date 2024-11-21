@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Cargar proveedores
-    fetch('http://localhost:3000/suppliers', {
+    fetch('http://192.168.77.43:3000/suppliers', {
         headers: {
             'Authorization': 'Bearer ' + token
         }
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => console.error('Error al cargar los proveedores:', error));
 
     // Cargar categorías
-    fetch('http://localhost:3000/category', {
+    fetch('http://192.168.77.43:3000/category', {
         headers: {
             'Authorization': 'Bearer ' + token
         }

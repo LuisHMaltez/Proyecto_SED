@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
 
-    fetch(`http://localhost:3000/users/${userId}`, {
+    fetch(`http://192.168.77.43:3000/users/${userId}`, {
         headers: {
             'Authorization': 'Bearer ' + token
         }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        fetch(`http://localhost:3000/users/${userId}`, {
+        fetch(`http://192.168.77.43:3000/users/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ function deleteUser() {
         return; // Si el usuario cancela, no proceder con la eliminación
     }
 
-    fetch(`http://localhost:3000/users/${userId}`, {
+    fetch(`http://192.168.77.43:3000/users/${userId}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token

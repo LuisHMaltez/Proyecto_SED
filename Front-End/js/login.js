@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        fetch('http://localhost:3000/auth/login', {
+        fetch('http://192.168.77.43:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

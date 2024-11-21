@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Obtener y mostrar los datos del perfil actual
-    fetch('http://localhost:3000/auth/user', {
+    fetch('http://192.168.77.43:3000/auth/user', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log('Datos que se enviarán:', data); // Muestra los datos en la consola
 
-            fetch('http://localhost:3000/auth/user', {
+            fetch('http://192.168.77.43:3000/auth/user', {
                 method: 'PUT',
                 headers: {
                     'Authorization': 'Bearer ' + token,

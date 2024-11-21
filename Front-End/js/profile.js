@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    fetch('http://localhost:3000/auth/user', {
+    fetch('http://192.168.77.43:3000/auth/user', {
         method: 'GET',
         headers: {
             'Authorization': 'Bearer ' + token

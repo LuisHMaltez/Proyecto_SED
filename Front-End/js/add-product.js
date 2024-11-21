@@ -28,8 +28,8 @@ function loadSelectOptions(url, selectElementId) {
 // Inicializar el formulario
 document.addEventListener('DOMContentLoaded', () => {
     // Cargar las opciones de los selectores
-    loadSelectOptions('http://localhost:3000/suppliers', 'supplierSelect');
-    loadSelectOptions('http://localhost:3000/category', 'categorySelect');
+    loadSelectOptions('http://192.168.77.43:3000/suppliers', 'supplierSelect');
+    loadSelectOptions('http://192.168.77.43:3000/category', 'categorySelect');
     
     document.getElementById('addProductForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
-        fetch('http://localhost:3000/products', {
+        fetch('http://192.168.77.43:3000/products', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

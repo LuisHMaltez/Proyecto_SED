@@ -6,7 +6,7 @@ function loadSuppliers() {
         window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
-    fetch('http://localhost:3000/suppliers', {
+    fetch('http://192.168.77.43:3000/suppliers', {
         headers: {
             'Authorization': 'Bearer ' + token
         }
@@ -40,7 +40,7 @@ function deleteSupplier(id) {
         window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
-    fetch(`http://localhost:3000/suppliers/${id}`, {
+    fetch(`http://192.168.77.43:3000/suppliers/${id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token

@@ -6,7 +6,7 @@ function loadUsers() {
         window.location.href = 'login.php'; // Redirigir al inicio de sesión si no hay token
     }
 
-    fetch('http://localhost:3000/users', {
+    fetch('http://192.168.77.43:3000/users', {
         headers: {
             'Authorization': 'Bearer ' + token
         }

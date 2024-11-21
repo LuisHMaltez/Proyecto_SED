@@ -6,7 +6,7 @@ document.getElementById('addSupplierForm').addEventListener('submit', function(e
     const data = Object.fromEntries(formData.entries());
     const token = localStorage.getItem('token');
     
-    fetch('http://localhost:3000/suppliers', {
+    fetch('http://192.168.77.43:3000/suppliers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
