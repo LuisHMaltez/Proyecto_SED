@@ -1,8 +1,8 @@
 // db.js
 require('dotenv').config();
-const { MongoClient } = require('mongodb');
 
-const uri = process.env.DB_URL; // Almacena esta URI en tu archivo .env
+const { MongoClient } = require('mongodb');
+const uri = process.env.MONGO_URI; // Almacena esta URI en tu archivo .env
 const client = new MongoClient(uri);
 
 let database;
