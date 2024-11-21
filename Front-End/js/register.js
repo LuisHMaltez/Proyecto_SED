@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('http://127.0.0.1:3000/auth/register', {
+        fetch('http://127.0.0.1:27017/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
