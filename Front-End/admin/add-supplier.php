@@ -19,7 +19,7 @@
                 <input type="text" name="name" placeholder="Nombre del Proveedor" required>
                 <input type="email" name="contact_info" placeholder="Email" required>
                 <input type="text" name="direccion" placeholder="Dirección" required>
-                <input type="number" name="registro" placeholder="Registro" required>
+                <input type="text" name="registro" placeholder="Registro" required>
                 <input type="text" name="encargado" placeholder="Nombre del Encargado" required>
                 <input type="number" id="phone" name="telefono" placeholder="Telefono" required>
                 <button type="submit">Agregar Proveedor</button>

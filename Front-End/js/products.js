@@ -88,16 +88,12 @@ function handleFilters(event) {
     }
 
     const nameFilter = document.getElementById('productName')?.value || '';
-    const minPriceFilter = document.getElementById('minPrice')?.value || '';
-    const maxPriceFilter = document.getElementById('maxPrice')?.value || '';
     const supplierFilter = document.getElementById('providerSelect')?.value || '';
     const categoryFilter = document.getElementById('categorySelect')?.value || '';
 
     const filters = {};
 
     if (nameFilter.trim()) filters.name = nameFilter.trim();
-    if (minPriceFilter) filters.minPrice = minPriceFilter;
-    if (maxPriceFilter) filters.maxPrice = maxPriceFilter;
     if (supplierFilter) filters.supplier = supplierFilter;
     if (categoryFilter) filters.category = categoryFilter;
 
@@ -134,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFilterButton.addEventListener('click', clearFilters);
     }
 
-    const inputs = ['productName', 'minPrice', 'maxPrice', 'providerSelect', 'categorySelect'];
+    const inputs = ['productName', 'providerSelect', 'categorySelect'];
     inputs.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
