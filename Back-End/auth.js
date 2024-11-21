@@ -11,24 +11,16 @@ const sendResponse = (res, statusCode, data) => {
     res.end(JSON.stringify(data));
 };
 
-// Registro de nuevo usuario
-const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password, callback) => {
+// Función para registrar un usuario
+const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacimiento, password, rol_id = 'user', callback) => {  
     try {
-        if (!nombre_usuario || !nombre || !email || !telefono || !fecha_nacimiento || !password) {
+        if (!nombre_usuario || !nombre || !email || !telefono || !fecha_nacimiento || !password) {  
             callback({ error: 'Faltan datos para el registro', statusCode: 400 });
             return;
         }
-        
+
         const hashedPassword = await bcrypt.hash(password, 12);
-        const user = { 
-            nombre_usuario, 
-            nombre, 
-            email, 
-            telefono, 
-            fecha_nacimiento, 
-            password: hashedPassword, 
-            rol_id: 'user' // Asignar rol por defecto 'user'
-        };
+        const user = { nombre_usuario, nombre, email, telefono, fecha_nacimiento, password: hashedPassword, rol_id };
 
         const result = await getDB().collection('users').insertOne(user);
         callback(null, { id: result.insertedId });
@@ -37,7 +29,25 @@ const registerUser = async (nombre_usuario, nombre, email, telefono, fecha_nacim
     }
 };
 
-const updateUser = async (id, nombre_usuario, nombre, email, telefono, fecha_nacimiento, rol_id, callback) => {
+const getUserById = async (userId, callback) => {
+    try {
+        const user = await getDB().collection('users').findOne({ _id: new ObjectId(userId) });
+
+        if (!user) {
+            callback({ error: 'Usuario no encontrado', statusCode: 404 });
+            return;
+        }
+
+        // Excluir la contraseña antes de devolver la información
+        const { password, ...userInfo } = user;
+        callback(null, userInfo);
+    } catch (err) {
+        callback({ error: err.message, statusCode: 500 });
+    }
+};
+
+
+const updateUsers = async (id, nombre_usuario, nombre, email, telefono, fecha_nacimiento, rol_id, callback) => {
     try {
         const db = getDB();
         const query = {
@@ -119,29 +129,40 @@ const loginUser = async (email, password, callback) => {
         callback({ error: err.message, statusCode: 500 });
     }
 };
+const updateUser = async (id, nombre_usuario, nombre, email, telefono, fecha_nacimiento, callback) => {
+    try {
+        const db = getDB();
 
-// Obtención del perfil del usuario 
-const getProfile = async (req, res) => { 
-    const token = req.headers['authorization'].split(' ')[1]; 
-    const decoded = jwt.verify(token, 'secret'); 
-    const db = getDB(); 
-    try { 
-        const user = await db.collection('users').findOne({ _id: new ObjectId(decoded._id) }); 
-        if (!user) { 
-            return res.status(404).send({ error: 'Usuario no encontrado' }); 
-        } 
-        res.send({ 
-            nombre_usuario: user.nombre_usuario, 
-            nombre: user.nombre, 
-            email: user.email, 
-            telefono: user.telefono, 
-            fecha_nacimiento: user.fecha_nacimiento, 
-            rol_id: user.rol_id 
-        }); 
-    } catch (error) { 
-        res.status(500).send({ error: 'Error obteniendo el perfil' });
+        // Comprobar si alguno de los datos fue proporcionado, si no se proporcionan, no se actualizan
+        const updateFields = {};
+        if (nombre_usuario) updateFields.nombre_usuario = nombre_usuario;
+        if (nombre) updateFields.nombre = nombre;
+        if (email) updateFields.email = email;
+        if (telefono) updateFields.telefono = telefono;
+        if (fecha_nacimiento) updateFields.fecha_nacimiento = fecha_nacimiento;
+
+        // Evitar que se actualice el rol
+        const query = {
+            $set: updateFields
+        };
+
+        // Actualizar el usuario
+        const result = await db.collection('users').updateOne(
+            { _id: new ObjectId(id) },
+            query
+        );
+
+        if (result.matchedCount === 0) {
+            callback({ error: 'Usuario no encontrado', statusCode: 404 });
+            return;
+        }
+
+        callback(null, result);
+    } catch (err) {
+        callback({ error: err.message, statusCode: 500 });
     }
 };
+
 
 // Middleware para autenticar el token
 const authenticateToken = (req, callback) => {
@@ -174,11 +195,12 @@ const authorizeRole = (roles, user, callback) => {
 module.exports = {
     registerUser,
     loginUser,
-    getProfile,
     authenticateToken,
     authorizeRole,
-    updateUser,
+    updateUsers,
     deleteUser,
     getAllUsers,
-    sendResponse
+    sendResponse,
+    getUserById,
+    updateUser
 };

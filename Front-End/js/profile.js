@@ -1,11 +1,17 @@
-// profile.js
-
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:3000/auth/profile', {
+    const token = localStorage.getItem('token');
+
+    // Decodificar el token para obtener el ID del usuario
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const userId = payload._id; // Ajusta esto según la estructura de tu token
+    console.log(userId)
+
+    fetch(`http://localhost:3000/auth/user/${userId}`, {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + token
         }
     })
+    console.log(userId)
     .then(response => {
         if (!response.ok) {
             throw new Error('Ruta no encontrada');

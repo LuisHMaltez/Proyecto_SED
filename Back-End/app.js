@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const cors = require('cors');
-const { registerUser, loginUser, getProfile, authenticateToken, authorizeRole, getAllUsers, updateUser, deleteUser } = require('./auth');
+const { registerUser, loginUser, authenticateToken, authorizeRole, getAllUsers, updateUser, deleteUser,getUserById } = require('./auth');
 const { createSupplier, getAllSuppliers, updateSupplier, deleteSupplier } = require('./suppliers');
 const { createProduct, getAllProducts, updateProduct, deleteProduct, advancedSearch } = require('./products');
 const { connectDB } = require('./db');
@@ -105,9 +105,10 @@ const server = http.createServer(async (req, res) => {
         // Rutas de autenticación
         if (path === '/auth/register' && method === 'POST') {
             try {
-                validateRequiredFields(body, ['nombre_usuario', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'password']);
+                validateRequiredFields(body, ['nombre_usuario', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'password']);  
+                const rol_id = body.rol_id || 'user'; 
                 const result = await new Promise((resolve, reject) => {
-                    registerUser(body.nombre_usuario, body.nombre, body.email, body.telefono, body.fecha_nacimiento, body.password, body.rol_id, (error, result) => {
+                    registerUser(body.nombre_usuario, body.nombre, body.email, body.telefono, body.fecha_nacimiento, body.password, rol_id, (error, result) => {
                         if (error) reject(error);
                         else resolve(result);
                     });
@@ -118,6 +119,64 @@ const server = http.createServer(async (req, res) => {
             }
             return;
         }
+        if (path === '/auth/user' && method === 'GET') {
+            // Verificar el token del usuario
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    authenticateToken(req, (error, user) => {
+                        if (error) reject(error);
+                        else resolve(user);
+                    });
+                });
+        
+                // Usamos el userId del token para obtener la información del usuario
+                const userId = result.userId;
+                const user = await new Promise((resolve, reject) => {
+                    getUserById(userId, (error, userData) => {
+                        if (error) reject(error);
+                        else resolve(userData);
+                    });
+                });
+        
+                sendResponse(res, 200, { message: 'Usuario encontrado', user: user });
+            } catch (error) {
+                handleError(res, error, 'Error al obtener la información del usuario');
+            }
+            return;
+        }
+        if (path === '/auth/user' && method === 'PUT') {
+            // Verificar el token del usuario
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    authenticateToken(req, (error, user) => {
+                        if (error) reject(error);
+                        else resolve(user);
+                    });
+                });
+        
+                const userId = result.userId; // Extraer el userId del token
+                const { nombre_usuario, nombre, email, telefono, fecha_nacimiento } = body;
+        
+                // Verificar si los campos necesarios están presentes
+                if (!nombre_usuario && !nombre && !email && !telefono && !fecha_nacimiento) {
+                    throw { error: 'No hay datos para actualizar', statusCode: 400 };
+                }
+        
+                // Actualizar los datos del usuario
+                const updatedUser = await new Promise((resolve, reject) => {
+                    updateUser(userId, nombre_usuario, nombre, email, telefono, fecha_nacimiento, (error, result) => {
+                        if (error) reject(error);
+                        else resolve(result);
+                    });
+                });
+        
+                sendResponse(res, 200, { message: 'Usuario actualizado correctamente', updatedUser });
+            } catch (error) {
+                handleError(res, error, 'Error al actualizar la información del usuario');
+            }
+            return;
+        }
+        
 
         if (path === '/auth/login' && method === 'POST') {
             try {
@@ -171,7 +230,7 @@ const server = http.createServer(async (req, res) => {
                             await authorize(['superadmin', 'admin'], user);
                             validateRequiredFields(body, ['nombre_usuario', 'nombre', 'email', 'telefono', 'fecha_nacimiento', 'rol_id']);
                             const result = await new Promise((resolve, reject) => {
-                                updateUser(userId, body.nombre_usuario, body.nombre, body.email, body.telefono, body.fecha_nacimiento, body.rol_id, (error, result) => {
+                                updateUsers(userId, body.nombre_usuario, body.nombre, body.email, body.telefono, body.fecha_nacimiento, body.rol_id, (error, result) => {
                                     if (error) reject(error);
                                     else resolve(result);
                                 });
@@ -199,96 +258,77 @@ const server = http.createServer(async (req, res) => {
                         return;
                     }
                 }
-                app.get('/auth/profile', getProfile);
-// ==================== RUTAS DE PROVEEDORES ====================
-if (path === '/suppliers' && method === 'GET') {
-    try {
-        const suppliers = await new Promise((resolve, reject) => {
-            getAllSuppliers((error, suppliers) => {
-                if (error) reject(error);
-                else resolve(suppliers);
-            });
-        });
-        sendResponse(res, 200, suppliers);
-    } catch (error) {
-        handleError(res, error, 'Error al obtener proveedores');
-    }
-    return;
-}
 
-if (path === '/suppliers' && method === 'POST') {
-    try {
-        await authorize(['superadmin', 'admin'], user);
-        validateRequiredFields(body, ['name', 'contact_info', 'direccion', 'registro', 'encargado', 'telefono']);
-        const result = await new Promise((resolve, reject) => {
-            createSupplier(body.name, body.contact_info, body.direccion, body.registro, body.encargado, body.telefono, (error, result) => {
-                if (error) reject(error);
-                else resolve(result);
-            });
-        });
-        sendResponse(res, 201, result);
-    } catch (error) {
-        handleError(res, error, 'Error al crear proveedor');
-    }
-    return;
-}
+                // ==================== RUTAS DE PROVEEDORES ====================
+                if (path === '/suppliers' && method === 'GET') {
+                    try {
+                        const suppliers = await new Promise((resolve, reject) => {
+                            getAllSuppliers((error, suppliers) => {
+                                if (error) reject(error);
+                                else resolve(suppliers);
+                            });
+                        });
+                        sendResponse(res, 200, suppliers);
+                    } catch (error) {
+                        handleError(res, error, 'Error al obtener proveedores');
+                    }
+                    return;
+                }
 
-const supplierIdMatch = path.match(/^\/suppliers\/([^/]+)$/);
-if (supplierIdMatch) {
-    const supplierId = supplierIdMatch[1];
+                if (path === '/suppliers' && method === 'POST') {
+                    try {
+                        await authorize(['superadmin', 'admin'], user);
+                        validateRequiredFields(body, ['name', 'contact_info', 'direccion', 'registro', 'encargado', 'telefono']);
+                        const result = await new Promise((resolve, reject) => {
+                            createSupplier(body.name, body.contact_info, body.direccion, body.registro, body.encargado, body.telefono, (error, result) => {
+                                if (error) reject(error);
+                                else resolve(result);
+                            });
+                        });
+                        sendResponse(res, 201, result);
+                    } catch (error) {
+                        handleError(res, error, 'Error al crear proveedor');
+                    }
+                    return;
+                }
 
-    if (method === 'GET') { // Añadir esta sección
-        try {
-            const supplier = await new Promise((resolve, reject) => {
-                getSupplierById(supplierId, (error, supplier) => {
-                    if (error) reject(error);
-                    else resolve(supplier);
-                });
-            });
-            if (!supplier) {
-                sendResponse(res, 404, { error: 'Proveedor no encontrado' });
-            } else {
-                sendResponse(res, 200, supplier);
-            }
-        } catch (error) {
-            handleError(res, error, 'Error al obtener proveedor');
-        }
-        return;
-    }
+                const supplierIdMatch = path.match(/^\/suppliers\/([^/]+)$/);
+                if (supplierIdMatch) {
+                    const supplierId = supplierIdMatch[1];
 
-    if (method === 'PUT') {
-        try {
-            await authorize(['superadmin', 'admin'], user);
-            validateRequiredFields(body, ['name', 'contact_info', 'direccion', 'registro', 'encargado', 'telefono']);
-            const result = await new Promise((resolve, reject) => {
-                updateSupplier(supplierId, body.name, body.contact_info, body.direccion, body.registro, body.encargado, body.telefono, (error, result) => {
-                    if (error) reject(error);
-                    else resolve(result);
-                });
-            });
-            sendResponse(res, 200, result);
-        } catch (error) {
-            handleError(res, error, 'Error al actualizar proveedor');
-        }
-        return;
-    }
+                    if (method === 'PUT') {
+                        try {
+                            await authorize(['superadmin', 'admin'], user);
+                            validateRequiredFields(body, ['name', 'contact_info', 'direccion', 'registro', 'encargado', 'telefono']);
+                            const result = await new Promise((resolve, reject) => {
+                                updateSupplier(supplierId, body.name, body.contact_info, body.direccion, body.registro, body.encargado, body.telefono, (error, result) => {
+                                    if (error) reject(error);
+                                    else resolve(result);
+                                });
+                            });
+                            sendResponse(res, 200, result);
+                        } catch (error) {
+                            handleError(res, error, 'Error al actualizar proveedor');
+                        }
+                        return;
+                    }
 
-    if (method === 'DELETE') {
-        try {
-            await authorize(['superadmin'], user);
-            const result = await new Promise((resolve, reject) => {
-                deleteSupplier(supplierId, (error, result) => {
-                    if (error) reject(error);
-                    else resolve(result);
-                });
-            });
-            sendResponse(res, 200, result);
-        } catch (error) {
-            handleError(res, error, 'Error al eliminar proveedor');
-        }
-        return;
-    }
-}
+                    if (method === 'DELETE') {
+                        try {
+                            await authorize(['superadmin'], user);
+                            const result = await new Promise((resolve, reject) => {
+                                deleteSupplier(supplierId, (error, result) => {
+                                    if (error) reject(error);
+                                    else resolve(result);
+                                });
+                            });
+                            sendResponse(res, 200, result);
+                        } catch (error) {
+                            handleError(res, error, 'Error al eliminar proveedor');
+                        }
+                        return;
+                    }
+                }
 
                 // ==================== RUTAS DE CATEGORÍAS ====================
                 if (path === '/category' && method === 'GET') {
@@ -425,11 +465,11 @@ if (productIdMatch) {
             const user = await authenticate(req);
             await authorize(['superadmin', 'admin'], user);
 
-            validateRequiredFields(body, ['name', 'description', 'category_id', 'price', 'stock', 'supplier_id']);
+            validateRequiredFields(body, ['name', 'description', 'price', 'stock', 'supplier_id']);
 
             const result = await new Promise((resolve, reject) => {
                 updateProduct(
-                    productId, body.name, body.description, body.category_id, body.price, body.stock, body.supplier_id,
+                    productId, body.name, body.description, body.price, body.stock, body.supplier_id,
                     (error, result) => {
                         if (error) reject(error);
                         else resolve(result);
