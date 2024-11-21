@@ -11,7 +11,6 @@ const { getAllCategories, createCategory, updateCategory, deleteCategory } = req
 const PORT = 3000;
 require('dotenv').config();
 
-app.use(cors());
 // Función helper para manejar respuestas
 const sendResponse = (res, statusCode, data) => {
     res.statusCode = statusCode;
@@ -74,6 +73,7 @@ const server = http.createServer(async (req, res) => {
     const path = parsedUrl.pathname;
 
     // Configurar CORS
+    app.use(cors());
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
