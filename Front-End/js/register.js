@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
+        const password = data.password;
+
+        // Reglas de validación
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+        if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+            alert('La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.');
+            return;
+        }
 
         fetch('http://localhost:3000/auth/register', {
             method: 'POST',
