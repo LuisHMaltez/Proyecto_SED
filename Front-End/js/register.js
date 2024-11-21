@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.');
             return;
         }
-
+        console.log("Primera fase")
         fetch('http://localhost:3000/auth/register', {
             method: 'POST',
             headers: {
